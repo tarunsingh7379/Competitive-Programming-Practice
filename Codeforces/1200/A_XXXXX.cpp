@@ -13,12 +13,36 @@ int main()
     {
         ll n, x;
         cin >> n >> x;
-        vector<ll> a(n);
+        ll a[n];
         ll sum = 0;
         for (ll i = 0; i < n; i++)
         {
             cin >> a[i];
             sum += a[i];
+        }
+        if (sum % x != 0)
+        {
+            cout << n << endl;
+        }
+        else
+        {
+            ll l = n, r = -1;
+            for (ll i = 0; i < n; i++)
+            {
+                if (a[i] % x != 0)
+                {
+                    l = min(l, i);
+                    r = max(r, i);
+                }
+            }
+            if (l == n)
+            {
+                cout << -1 << endl;
+            }
+            else
+            {
+                cout << n - 1 - min(l, r) << endl;
+            }
         }
 
         t--;
