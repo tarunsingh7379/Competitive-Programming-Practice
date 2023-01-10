@@ -41,7 +41,7 @@ int main()
             }
             else
             {
-                cout << n - 1 - min(l, r) << endl;
+                cout << max(n - 1 - l, r) << endl;
             }
         }
 
