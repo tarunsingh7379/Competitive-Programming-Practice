@@ -3,79 +3,78 @@ typedef long long int ll;
 #define M 1000000007
 using namespace std;
 
-ll func(ll ind, ll type, ll k, vector<ll> &a)
+ll func(ll ind, ll type, ll k, vector<ll> &a, vector<vector<ll>> &dp)
 {
-    if (ind == (a.size() - 1))
+    if (ind == a.size() - 1)
     {
-        ll curr = a[ind - 1];
-        ll val = 0;
-        if (curr <= k)
+        ll prev = 0;
+        if (type == 0)
         {
-            if (type == 0)
-            {
-                val = 0;
-            }
-            else
-            {
-                val = curr;
-            }
+            prev = a[ind - 1];
+        }
+        else if (type == 1)
+        {
+            prev = 0;
+        }
+        else if (type == 2)
+        {
+            prev = a[ind - 1] - k;
         }
         else
         {
-            if (type == 0)
-            {
-                val = curr - k;
-            }
-            else
-            {
-                val = k;
-            }
+            prev = k;
         }
-        return val * a[ind];
+        return prev * a[ind];
+    }
+    if (dp[ind][type] != -1)
+    {
+        return dp[ind][type];
     }
     ll ans = 1e18;
-    ll curr = a[ind];
-    ll val = 0;
-    if (curr <= k)
+    if (ind == 1)
     {
-        if (type == 0)
+        if (a[ind] <= k)
         {
-            val = 0;
+            ans = min(ans, a[ind - 1] * 0 + func(ind + 1, 0, k, a, dp));
+            ans = min(ans, a[ind - 1] * a[ind] + func(ind + 1, 1, k, a, dp));
         }
         else
         {
-            val = curr;
+            ans = min(ans, a[ind - 1] * k + func(ind + 1, 2, k, a, dp));
+            ans = min(ans, a[ind - 1] * (a[ind] - k) + func(ind + 1, 3, k, a, dp));
         }
     }
     else
     {
+        ll prev = 0;
         if (type == 0)
         {
-            val = curr - k;
+            prev = a[ind - 1];
+        }
+        else if (type == 1)
+        {
+            prev = 0;
+        }
+        else if (type == 2)
+        {
+            prev = a[ind - 1] - k;
         }
         else
         {
-            val = k;
+            prev = k;
+        }
+        if (a[ind] <= k)
+        {
+            ans = min(ans, prev * 0 + func(ind + 1, 0, k, a, dp));
+            ans = min(ans, prev * a[ind] + func(ind + 1, 1, k, a, dp));
+        }
+        else
+        {
+            ans = min(ans, prev * k + func(ind + 1, 2, k, a, dp));
+            ans = min(ans, prev * (a[ind] - k) + func(ind + 1, 3, k, a, dp));
         }
     }
-    if (ind == 0)
-    {
-        val = a[ind];
-    }
-    ll next = a[ind + 1];
-    if (next <= k)
-    {
-        ll ch1 = val * next + func(ind + 1, 0, k, a);
-        ll ch2 = func(ind + 1, 1, k, a);
-        ans = min(ch1, ch2);
-    }
-    else
-    {
-        ll ch1 = val * k + func(ind + 1, 0, k, a);
-        ll ch2 = val * (next - k) + func(ind + 1, 1, k, a);
-        ans = min(ch1, ch2);
-    }
-    return ans;
+    return dp[ind][type] = ans;
 }
 
 int main()
@@ -93,7 +92,9 @@ int main()
         {
             cin >> a[i];
         }
-        cout << func(0, 0, k, a) << endl;
+        vector<vector<ll>> dp(n, vector<ll>(4, -1));
+        ll ans = func(1, 0, k, a, dp);
+        cout << ans << endl;
         t--;
     }
 
