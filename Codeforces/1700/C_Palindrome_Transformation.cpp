@@ -52,6 +52,7 @@ int main()
         int y = (s[n - 1 - i] - s[i] + 26) % 26;
         cost += min(x, y);
     }
+
     int mi = min((right - k) * 2 + (k - left), (k - left) * 2 + (right - k));
     cost += mi;
     cout << cost << endl;
