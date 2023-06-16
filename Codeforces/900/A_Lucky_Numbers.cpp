@@ -19,7 +19,7 @@ int main()
             string s = to_string(i);
             sort(s.begin(), s.end());
             int diff = s.back() - s.front();
-            if (diff > val)
+            if (diff >= val)
             {
                 val = diff;
                 ans = i;
