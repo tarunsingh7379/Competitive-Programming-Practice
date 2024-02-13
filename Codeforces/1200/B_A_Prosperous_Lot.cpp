@@ -10,7 +10,7 @@ int main()
 
     ll n;
     cin >> n;
-    if (n > 32)
+    if (n > 36)
     {
         cout << -1 << endl;
     }
