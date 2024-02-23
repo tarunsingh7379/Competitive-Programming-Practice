@@ -3,33 +3,29 @@ typedef long long int ll;
 #define M 1000000007
 using namespace std;
 
-bool check(int k, int n, int a, int b)
-{
-    int cnt_a = a / k, cnt_b = b / k;
-    return (cnt_a + cnt_b >= n && cnt_a > 0 && cnt_b > 0);
-}
-
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int n, a, b;
-    cin >> n >> a >> b;
-    int l = 1, r = max(a, b);
-    int ans = 1;
-    while (l <= r)
+    ll n;
+    cin >> n;
+    vector<vector<ll>> v(n + 1);
+    for (ll i = 0; i < 2 * n; i++)
     {
-        int mid = (l + r) / 2;
-        if (check(mid, n, a, b))
-        {
-            ans = mid;
-            l = mid + 1;
-        }
-        else
-        {
-            r = mid - 1;
-        }
+        ll x;
+        cin >> x;
+        v[x].push_back(i + 1);
+    }
+    ll a = 1, b = 1;
+    ll ans = 0;
+    for (ll i = 1; i <= n; i++)
+    {
+        ll cost1 = abs(a - v[i][0]) + abs(b - v[i][1]);
+        ll cost2 = abs(b - v[i][0]) + abs(a - v[i][1]);
+        ans += min(cost1, cost2);
+        a = v[i][0];
+        b = v[i][1];
     }
     cout << ans << endl;
 
