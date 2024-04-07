@@ -13,25 +13,39 @@ int main()
     {
         ll n, k;
         cin >> n >> k;
-        ll a[k];
-        for (ll i = 0; i < k; i++)
+        ll sum[n + 1];
+        for (ll i = n - k + 1; i <= n; i++)
         {
-            cin >> a[i];
+            cin >> sum[i];
         }
-        ll x = (a[0] + (n - k)) / (n - k + 1);
-        ll flag = 1;
-        for (ll i = 1; i < k; i++)
+        if (k == 1)
         {
-            ll req = a[i] - a[i - 1];
-            ll y = req;
-            if (y < x)
+            cout << "Yes" << endl;
+        }
+        else
+        {
+            vector<ll> a(n + 1);
+            for (ll i = n - k + 2; i <= n; i++)
             {
-                flag = 0;
-                break;
+                a[i] = sum[i] - sum[i - 1];
             }
-            x = y;
+            if (!is_sorted(a.begin() + n - k + 2, a.end()))
+            {
+                cout << "No" << endl;
+            }
+            else
+            {
+                if (a[n - k + 2] * (n - k + 1) < sum[n - k + 1])
+                {
+                    cout << "No" << endl;
+                }
+                else
+                {
+                    cout << "Yes" << endl;
+                }
+            }
         }
-        cout << (flag ? "Yes" : "No") << endl;
+
         t--;
     }
 
