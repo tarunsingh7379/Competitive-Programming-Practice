@@ -3,6 +3,25 @@ typedef long long int ll;
 #define M 1000000007
 using namespace std;
 
+bool is_possible(string &s, vector<int> &pos)
+{
+    if (s[1] == '>' && pos[s[0] - 'A'] <= pos[s[2] - 'A'])
+        return false;
+    if (s[1] == '<' && pos[s[0] - 'A'] >= pos[s[2] - 'A'])
+        return false;
+    return true;
+}
+
+bool check(string s, string &a, string &b, string &c)
+{
+    vector<int> pos(3, 0);
+    for (int i = 0; i < s.size(); i++)
+    {
+        pos[s[i] - 'A'] = i + 1;
+    }
+    return is_possible(a, pos) && is_possible(b, pos) && is_possible(c, pos);
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -10,145 +29,16 @@ int main()
 
     string a, b, c;
     cin >> a >> b >> c;
-    int flag = 0;
-    if (a[1] == '>' && b[1] == '>')
+    string ans = "ABC";
+    string ret = "Impossible";
+    do
     {
-        if (a[0] == b[0])
+        if (check(ans, a, b, c))
         {
-            if (a[0] == c[0] || a[0] == c[2])
-            {
-            }
-            else
-            {
-                if (c[1] == '>')
-                {
-                    cout << a[0] << c[0] << c[2] << endl;
-                    flag = 1;
-                }
-                else
-                {
-                    cout << a[0] << c[2] << c[0] << endl;
-                    flag = 1;
-                }
-            }
+            ret = ans;
+            break;
         }
-    }
-    else if (a[1] == '>' && c[1] == '>')
-    {
-        if (a[0] == c[0])
-        {
-            if (a[0] == b[0] || a[0] == b[2])
-            {
-            }
-            else
-            {
-                if (b[1] == '>')
-                {
-                    cout << a[0] << b[0] << b[2] << endl;
-                    flag = 1;
-                }
-                else
-                {
-                    cout << a[0] << b[2] << b[0] << endl;
-                    flag = 1;
-                }
-            }
-        }
-    }
-    else if (b[1] == '>' && c[1] == '>')
-    {
-        if (b[0] == c[0])
-        {
-            if (b[0] == a[0] || b[0] == a[2])
-            {
-            }
-            else
-            {
-                if (a[1] == '>')
-                {
-                    cout << b[0] << a[0] << a[2] << endl;
-                    flag = 1;
-                }
-                else
-                {
-                    cout << b[0] << a[2] << a[0] << endl;
-                    flag = 1;
-                }
-            }
-        }
-    }
-    swap(a[0], a[2]);
-    swap(b[0], b[2]);
-    swap(c[0], c[2]);
-    if (a[1] == '>' && b[1] == '>')
-    {
-        if (a[0] == b[0])
-        {
-            if (a[0] == c[0] || a[0] == c[2])
-            {
-            }
-            else
-            {
-                if (c[1] == '>')
-                {
-                    cout << a[0] << c[0] << c[2] << endl;
-                    flag = 1;
-                }
-                else
-                {
-                    cout << a[0] << c[2] << c[0] << endl;
-                    flag = 1;
-                }
-            }
-        }
-    }
-    else if (a[1] == '>' && c[1] == '>')
-    {
-        if (a[0] == c[0])
-        {
-            if (a[0] == b[0] || a[0] == b[2])
-            {
-            }
-            else
-            {
-                if (b[1] == '>')
-                {
-                    cout << a[0] << b[0] << b[2] << endl;
-                    flag = 1;
-                }
-                else
-                {
-                    cout << a[0] << b[2] << b[0] << endl;
-                    flag = 1;
-                }
-            }
-        }
-    }
-    else if (b[1] == '>' && c[1] == '>')
-    {
-        if (b[0] == c[0])
-        {
-            if (b[0] == a[0] || b[0] == a[2])
-            {
-            }
-            else
-            {
-                if (a[1] == '>')
-                {
-                    cout << b[0] << a[0] << a[2] << endl;
-                    flag = 1;
-                }
-                else
-                {
-                    cout << b[0] << a[2] << a[0] << endl;
-                    flag = 1;
-                }
-            }
-        }
-    }
-    if (flag == 0)
-    {
-        cout << "Impossible" << endl;
-    }
+    } while (next_permutation(ans.begin(), ans.end()));
+    cout << ret << endl;
     return 0;
 }
