@@ -10,37 +10,42 @@ int main()
 
     ll n;
     cin >> n;
-    ll a[n];
+    deque<ll> dq;
     for (ll i = 0; i < n; i++)
     {
-        cin >> a[i];
+        ll x;
+        cin >> x;
+        dq.push_back(x);
     }
 
-    ll l = 0, r = n - 1;
-    ll alice = a[l], bob = a[r];
-    while (l < r)
+    ll alice_t = 0, bob_t = 0, alice = 0, bob = 0;
+    while (!dq.empty())
     {
-        if (alice >= bob)
+        if (alice_t != 0)
         {
-            alice -= bob;
-            r--;
-            if (r > l)
-            {
-                bob += a[r];
-            }
+            alice_t--;
         }
-        else
+        if (bob_t != 0)
         {
-            bob -= alice;
-            l++;
-            if (l < r)
+            bob_t--;
+        }
+        if (alice_t == 0)
+        {
+            alice_t = dq.front();
+            dq.pop_front();
+            alice++;
+        }
+        if (!dq.empty())
+        {
+            if (bob_t == 0)
             {
-                alice += a[l];
+                bob_t = dq.back();
+                dq.pop_back();
+                bob++;
             }
         }
     }
-    cout << l << " " << r << endl;
-    cout << (l + 1) << " " << n - 1 - r << endl;
+    cout << alice << " " << bob << endl;
 
     return 0;
 }
