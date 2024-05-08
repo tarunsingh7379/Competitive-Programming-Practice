@@ -19,7 +19,7 @@ int main()
         }
         else if (k == 2)
         {
-            cout << n + max(0LL, (m - n)) / n << endl;
+            cout << min(m, n) + max(0LL, (m - n)) / n << endl;
         }
         else if (k == 3)
         {
