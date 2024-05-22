@@ -20,11 +20,11 @@ int main()
     sort(a, a + n);
     if (a[0] == a[n - 1])
     {
-        cout << 0 << " " << n * (n - 1) / 2 << endl;
+        cout << 0 << " " << 1LL * n * (n - 1) / 2 << endl;
     }
     else
     {
-        cout << a[n - 1] - a[0] << " " << mp[a[0]] * mp[a[n - 1]] << endl;
+        cout << a[n - 1] - a[0] << " " << 1LL * mp[a[0]] * mp[a[n - 1]] << endl;
     }
 
     return 0;
