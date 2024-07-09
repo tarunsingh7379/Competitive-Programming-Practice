@@ -29,12 +29,12 @@ int main()
     {
         if (k >= v[ind])
         {
-            ans = ans + v[ind] * v[ind];
+            ans = ans + 1LL * v[ind] * v[ind];
             k -= v[ind];
         }
         else
         {
-            ans = ans + k * k;
+            ans = ans + 1LL * k * k;
             k = 0;
         }
         ind++;
