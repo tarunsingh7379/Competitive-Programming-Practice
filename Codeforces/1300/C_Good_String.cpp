@@ -14,6 +14,7 @@ int main()
     cin >> s;
     ll ans = 0;
     string str = "";
+
     for (ll i = 0; i < n; i++)
     {
         if (ans % 2 == 0)
