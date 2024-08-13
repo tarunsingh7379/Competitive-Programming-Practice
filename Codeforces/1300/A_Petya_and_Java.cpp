@@ -29,7 +29,6 @@ int main()
         {
             cout << "long" << endl;
         }
-        cout << "hi";
     }
     else
     {
