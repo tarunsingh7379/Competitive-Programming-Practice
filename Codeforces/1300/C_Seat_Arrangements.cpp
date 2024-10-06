@@ -64,7 +64,7 @@ int main()
             ans = ans + (cnt - k + 1);
         }
     }
-    if ((n == 1 || m == 1) && k == 1)
+    if (k == 1)
     {
         ans /= 2;
     }
