@@ -53,7 +53,7 @@ int main()
         }
         if (last >= n - m)
         {
-            ll x = INT_MAX;
+            ll x = 1e17;
             for (ll i = n - m; i < n; i++)
             {
                 ll left = prefix[i];
@@ -66,7 +66,7 @@ int main()
         }
         else
         {
-            ll x = INT_MAX;
+            ll x = 1e17;
             for (ll i = n - m; i < n; i++)
             {
                 ll left = prefix[i];
