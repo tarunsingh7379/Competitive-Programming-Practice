@@ -28,6 +28,7 @@ int main()
 
     int n, k;
     cin >> n >> k;
+
     vector<vector<int>> dp(k, vector<int>(n + 1, -1));
     cout << func(0, 1, n, k, dp) << endl;
 
