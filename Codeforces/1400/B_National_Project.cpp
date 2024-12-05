@@ -14,14 +14,7 @@ int main()
         ll n, g, b;
         cin >> n >> g >> b;
         ll req = (n + 1) / 2;
-        if (n <= g)
-        {
-            cout << n << endl;
-        }
-        else
-        {
-            cout << (req / g) * (g + b) + (req % g != 0 ? req % g : -b) << endl;
-        }
+        cout << max(n, (req / g) * (g + b) + (req % g != 0 ? req % g : -b)) << endl;
         t--;
     }
 
