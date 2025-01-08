@@ -16,16 +16,16 @@ bool check(int first, vector<int> &a)
     }
     sort(v1.begin(), v1.end());
     sort(v2.begin(), v2.end());
-    for (int i = 1; i < v1.size(); i++)
+    for (int i = 0; i < v1.size(); i++)
     {
-        if (v1[i] != v1[i - 1] + 1)
+        if (v1[i] != i + 1)
         {
             return false;
         }
     }
-    for (int i = 1; i < v2.size(); i++)
+    for (int i = 0; i < v2.size(); i++)
     {
-        if (v2[i] != v2[i - 1] + 1)
+        if (v2[i] != i + 1)
         {
             return false;
         }
@@ -50,14 +50,14 @@ int main()
             cin >> a[i];
             ma = max(ma, a[i]);
         }
-        vector<pair<int, int>> ans;
+        set<pair<int, int>> ans;
         if (check(ma, a))
         {
-            ans.push_back({ma, n - ma});
+            ans.insert({ma, n - ma});
         }
         if (check(n - ma, a))
         {
-            ans.push_back({n - ma, ma});
+            ans.insert({n - ma, ma});
         }
         cout << ans.size() << endl;
         for (auto num : ans)
