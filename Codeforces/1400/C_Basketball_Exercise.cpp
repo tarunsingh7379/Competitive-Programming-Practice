@@ -3,18 +3,35 @@ typedef long long int ll;
 #define M 1000000007
 using namespace std;
 
-ll func(ll ind, ll top, vector<vector<ll>> &a)
+ll func(ll ind, ll prev, vector<ll> &a, vector<ll> &b,
+        vector<vector<ll>> &dp)
 {
     if (ind >= a.size())
     {
         return 0;
     }
+    if (dp[ind][prev] != -1)
+    {
+        return dp[ind][prev];
+    }
     ll ans = 0;
-
-    ll pick = a[top][ind] + func(ind + 1, !top, a) + func(ind + 2, top, a);
-    ll notPick = max(func(ind + 1, top, a), func(ind + 1, !top, a));
-
-    return max(pick, notPick);
+    if (prev == 1)
+    {
+        ans = max(ans, a[ind] + func(ind + 1, 2, a, b, dp));
+        ans = max(ans, a[ind] + func(ind + 1, 3, a, b, dp));
+    }
+    else if (prev == 2)
+    {
+        ans = max(ans, b[ind] + func(ind + 1, 1, a, b, dp));
+        ans = max(ans, b[ind] + func(ind + 1, 3, a, b, dp));
+    }
+    else
+    {
+        ans = max(ans, 0 + func(ind + 1, 1, a, b, dp));
+        ans = max(ans, 0 + func(ind + 1, 2, a, b, dp));
+        ans = max(ans, 0 + func(ind + 1, 3, a, b, dp));
+    }
+    return dp[ind][prev] = ans;
 }
 
 int main()
@@ -25,20 +42,22 @@ int main()
     ll n;
     cin >> n;
 
-    vector<vector<ll>> a(2);
-
-    for (ll j = 0; j < 2; j++)
+    vector<ll> a(n), b(n);
+    for (ll i = 0; i < n; i++)
     {
-        for (ll i = 0; i < n; i++)
-        {
-            ll x;
-            cin >> x;
-            a[j].push_back(x);
-        }
+        cin >> a[i];
     }
-
-    ll ans = max(func(0, 0, a), func(0, 1, a));
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> b[i];
+    }
+    ll ans = 0;
+    vector<vector<ll>> dp(n, vector<ll>(4, -1));
+    for (ll i = 0; i < n; i++)
+    {
+        ans = max(ans, func(i, 1, a, b, dp));
+        ans = max(ans, func(i, 2, a, b, dp));
+    }
     cout << ans << endl;
-
     return 0;
 }
