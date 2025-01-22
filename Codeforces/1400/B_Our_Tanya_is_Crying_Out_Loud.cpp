@@ -11,25 +11,33 @@ int main()
     ll n, k, a, b;
     cin >> n >> k >> a >> b;
     ll ans = 0;
-    while (n != 1)
+    if (k == 1)
     {
-        ll rem = n % k;
-        if (rem == 0)
+        ans = (n - 1) * a;
+    }
+    else
+    {
+        while (n != 1)
         {
-            ans = ans + min(b, (n - n / k) * a);
-            n /= k;
-        }
-        else
-        {
-            n -= rem;
-            ans += a * rem;
-            if (n == 0)
+            ll rem = n % k;
+            if (rem == 0)
             {
-                ans -= a;
-                n = 1;
+                ans = ans + min(b, (n - n / k) * a);
+                n /= k;
+            }
+            else
+            {
+                n -= rem;
+                ans += a * rem;
+                if (n == 0)
+                {
+                    ans -= a;
+                    n = 1;
+                }
             }
         }
     }
+
     cout << ans << endl;
 
     return 0;
