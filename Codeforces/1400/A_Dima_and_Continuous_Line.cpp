@@ -3,10 +3,6 @@ typedef long long int ll;
 #define M 1000000007
 using namespace std;
 
-/*
-0....1000...2000....3000
-*/
-
 int main()
 {
     ios_base::sync_with_stdio(false);
