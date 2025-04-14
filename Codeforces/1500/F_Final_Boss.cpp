@@ -7,7 +7,9 @@ bool check(ll health, ll k, vector<ll> &a, vector<ll> &b)
 {
     for (ll i = 0; i < a.size(); i++)
     {
-        health -= (1 + k / b[i]) * a[i];
+        if (health <= 0)
+            return true;
+        health = health - (1LL + k / b[i]) * a[i];
     }
     return (health <= 0);
 }
@@ -31,7 +33,7 @@ int main()
         {
             cin >> b[i];
         }
-        ll l = 0, r = 1e12;
+        ll l = 0, r = 1e11;
         ll ans = 0;
         while (l <= r)
         {
