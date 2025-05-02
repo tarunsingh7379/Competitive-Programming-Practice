@@ -10,67 +10,77 @@ int main()
 
     int n;
     cin >> n;
-    set<int> st;
-    for (int i = 1; i <= n; i++)
-    {
-        st.insert(i);
-    }
-    vector<int> a(n);
+    int a[n];
     for (int i = 0; i < n; i++)
     {
         cin >> a[i];
-        st.erase(a[i]);
     }
-    set<int> notSafe;
+    vector<int> used(n + 1, 0);
+    vector<int> ind;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] != 0)
+        {
+            used[a[i]] = 1;
+        }
+        else
+        {
+            ind.push_back(i);
+        }
+    }
+    vector<int> problematic_val, problematic_ind;
+    for (auto i : ind)
+    {
+        if (!used[i + 1])
+        {
+            problematic_ind.push_back(i);
+            problematic_val.push_back(i + 1);
+        }
+    }
+    int j = 0;
+    if (problematic_val.size() > 1)
+    {
+        rotate(problematic_val.begin(), problematic_val.begin() + 1, problematic_val.end());
+        for (auto i : problematic_ind)
+        {
+            if (j == problematic_val.size())
+                break;
+            a[i] = problematic_val[j];
+            used[problematic_val[j]] = 1;
+            j++;
+        }
+    }
+    else if (problematic_val.size() == 1)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] == 0 && problematic_val[0] != (i + 1))
+            {
+                a[i] = problematic_val[0];
+                used[problematic_val[0]] = 1;
+                break;
+            }
+        }
+    }
+    vector<int> notused;
+    for (int i = 1; i <= n; i++)
+    {
+        if (!used[i])
+        {
+            notused.push_back(i);
+        }
+    }
+    j = 0;
     for (int i = 0; i < n; i++)
     {
         if (a[i] == 0)
         {
-            if (st.count(i + 1))
-            {
-                notSafe.insert(i + 1);
-                st.erase(i + 1);
-            }
+            a[i] = notused[j++];
         }
     }
-
     for (int i = 0; i < n; i++)
     {
-        if (a[i] == 0)
-        {
-            if (!notSafe.count(i + 1))
-            {
-                int x = *st.begin();
-                a[i] = x;
-                st.erase(x);
-            }
-        }
-    }
-    int flag = 1;
-
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i] == 0)
-        {
-            if (flag == 1)
-            {
-                int x = *notSafe.rbegin();
-                a[i] = x;
-                flag = 0;
-                notSafe.erase(x);
-            }
-            else
-            {
-                int x = *notSafe.begin();
-                a[i] = x;
-                notSafe.erase(x);
-            }
-        }
-    }
-
-    for (auto num : a)
-    {
-        cout << num << " ";
+        cout << a[i] << " ";
     }
     cout << endl;
 
