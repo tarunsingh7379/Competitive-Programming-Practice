@@ -14,28 +14,53 @@ int main()
         int n;
         cin >> n;
         int a[n];
+        map<int, int> mp;
         for (int i = 0; i < n; i++)
         {
             cin >> a[i];
+            mp[a[i]]++;
         }
-        int ans = 0;
-        for (int i = 1; i < n; i++)
+        int ans = 0, g = 0;
+        for (int i = 0; i < n; i++)
         {
-            int g = __gcd(a[i], a[i - 1]);
-            if (g != a[i] && g != a[i - 1])
-            {
-                ans++;
-                a[i] = g;
-            }
+            g = __gcd(g, a[i]);
         }
-        for (int i = n - 2; i >= 0; i--)
+        if (mp[g] > 0)
         {
-            if (a[i] != a[i + 1])
-            {
-                ans++;
-                a[i] = a[i + 1];
-            }
+            ans = n - mp[g];
         }
+        else
+        {
+            int cost = INT_MAX;
+            mp.erase(g);
+            for (auto num : mp)
+            {
+                vector<int> dis(5001, -1);
+                queue<int> q;
+                q.push(num.first);
+                dis[num.first] = 0;
+                while (!q.empty() && dis[g] == -1)
+                {
+                    int val = q.front();
+                    q.pop();
+                    for (int i = 0; i < n; i++)
+                    {
+                        int x = __gcd(val, a[i]);
+                        if (dis[x] == -1)
+                        {
+                            dis[x] = dis[val] + 1;
+                            q.push(x);
+                        }
+                    }
+                }
+                if (dis[g] != -1)
+                {
+                    cost = min(cost, dis[g]);
+                }
+            }
+            ans = cost + (n - 1);
+        }
+
         cout << ans << endl;
         t--;
     }
