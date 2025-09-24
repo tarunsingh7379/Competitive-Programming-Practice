@@ -13,32 +13,23 @@ int main()
     {
         string s;
         cin >> s;
-        int ans = 0, cnt = 0, extra = 0;
+        int ans = 0, cnt = 0, mi = INT_MAX;
         int n = s.size();
         for (int i = 0; i < n; i++)
         {
             if (s[i] == 'A')
             {
-                if (extra == 0)
-                {
-                    cnt++;
-                }
-                else
-                {
-                    ans++;
-                }
+                cnt++;
+                ans++;
             }
             else
             {
-                if (cnt == 0)
-                {
-                    extra = 1;
-                }
-                ans += cnt;
+                mi = min(mi, cnt);
                 cnt = 0;
             }
         }
-        cout << ans << endl;
+        mi = min(mi, cnt);
+        cout << ans - mi << endl;
         t--;
     }
 
