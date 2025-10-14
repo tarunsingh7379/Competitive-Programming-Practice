@@ -3,11 +3,6 @@ typedef long long int ll;
 #define M 1000000007
 using namespace std;
 
-/*
-prefix[j] - prefix[i-1] <= a[i]
-
-*/
-
 int main()
 {
     ios_base::sync_with_stdio(false);
