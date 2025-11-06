@@ -12,27 +12,15 @@ int main()
     cin >> n >> d >> v >> g >> r;
 
     double ans = 0;
-    int cur = 0;
-    while (cur < n)
+    ans = ans + d / v;
+    double x = ans - floor(ans / (g + r)) * (g + r);
+    if (x >= g)
     {
-        int new_d = cur + d;
-        if (new_d < n)
-        {
-            cur += d;
-            ans = ans + d / v;
-        }
-        else
-        {
-            int rem = n - cur;
-            ans = ans + rem / v;
-            break;
-        }
-        double x = ans - floor(ans / (g + r)) * (g + r);
-        if (x >= g)
-        {
-            ans += (g + r - ans);
-        }
+        ans += (g + r - x);
     }
+    int rem = n - d;
+    ans = ans + rem / v;
+
     cout << fixed << setprecision(12);
     cout << ans << endl;
 
