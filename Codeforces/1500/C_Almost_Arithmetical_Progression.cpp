@@ -12,21 +12,45 @@ int main()
     cin >> n;
     vector<int> a(n);
     for (int i = 0; i < n; i++)
-        cin >> a[i];
-
-    int ans = 0;
-    vector<unordered_map<int, int>> dp(n);
-
-    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < i; j++)
+        cin >> a[i];
+    }
+    map<int, int> mp;
+    int ind = 0;
+    for (auto num : a)
+    {
+        if (mp.find(num) == mp.end())
         {
-            dp[i][a[j]] = max({dp[i][a[j]], 2, dp[j][a[i]] + 1});
-            ans = max(ans, dp[i][a[j]]);
+            mp[num] = ind++;
         }
     }
-
-    cout << ans << endl;
+    for (auto &num : a)
+    {
+        num = mp[num];
+    }
+    int ans = 0;
+    vector<vector<int>> dp(ind, vector<int>(ind, 0));
+    for (int i = 0; i < n; i++)
+    {
+        int flag = 0;
+        for (int j = 0; j < i; j++)
+        {
+            if (a[i] == a[j])
+            {
+                if (!flag)
+                {
+                    flag = 1;
+                    dp[a[i]][a[j]]++;
+                }
+            }
+            else
+            {
+                dp[a[i]][a[j]] = dp[a[j]][a[i]] + 1;
+            }
+            ans = max(ans, dp[a[i]][a[j]]);
+        }
+    }
+    cout << ans + 1 << endl;
 
     return 0;
 }
