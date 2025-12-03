@@ -12,12 +12,10 @@ int main()
     {
         string s;
         cin >> s;
-
         int bal = 0;
         int maxSortedPref = 0;
         int minNotSortedPref = 0;
         bool ok = true;
-
         for (char c : s)
         {
             if (c == '+')
@@ -55,7 +53,8 @@ int main()
         }
 
         cout << (ok ? "YES" : "NO") << endl;
+        t--;
     }
-    t--;
+
     return 0;
 }
