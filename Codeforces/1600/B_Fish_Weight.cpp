@@ -22,9 +22,11 @@ int main()
         cin >> b[i];
         mp[b[i]]--;
     }
+    ll cur = 0;
     for (auto it = mp.rbegin(); it != mp.rend(); it++)
     {
-        if (it->second > 0)
+        cur += it->second;
+        if (cur > 0)
         {
             cout << "YES" << endl;
             return 0;
