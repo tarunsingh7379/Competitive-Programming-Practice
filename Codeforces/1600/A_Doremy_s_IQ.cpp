@@ -18,6 +18,24 @@ int main()
         {
             cin >> a[i];
         }
+        string ans(n, '0');
+        int q = 0;
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (a[i] > q)
+            {
+                if (q < k)
+                {
+                    q++;
+                    ans[i] = '1';
+                }
+            }
+            else
+            {
+                ans[i] = '1';
+            }
+        }
+        cout << ans << endl;
 
         t--;
     }
