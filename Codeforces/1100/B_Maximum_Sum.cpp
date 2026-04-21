@@ -18,28 +18,25 @@ int main()
         {
             cin >> a[i];
         }
-        sort(a, a + n);
-
-        vector<ll> prefix(n, 0);
-        prefix[0] = a[0];
-        for (ll i = 1; i < n; i++)
+        map<ll, ll> mp;
+        ll sum = 0, ma = 0;
+        for (ll i = 0; i < n; i++)
         {
-            prefix[i] = prefix[i - 1] + a[i];
-        }
-
-        ll ans = 0;
-        for (ll i = 0; i <= k; i++)
-        {
-            ll l = 2 * i, r = n - (k - i) - 1;
-            ll sum = prefix[r];
-            if (l - 1 >= 0)
+            sum += a[i];
+            ma = max(ma, sum);
+            if (!mp.empty())
             {
-                sum -= prefix[l - 1];
+                ma = max(ma, sum - mp.begin()->first);
             }
-            ans = max(ans, sum);
+            mp[sum]++;
         }
+        ll ans = sum - ma;
+        for (ll i = 0; i < k; i++)
+        {
+            ma = (ma + ma) % M;
+        }
+        ans = (ans % M + ma + M) % M;
         cout << ans << endl;
-
         t--;
     }
 
