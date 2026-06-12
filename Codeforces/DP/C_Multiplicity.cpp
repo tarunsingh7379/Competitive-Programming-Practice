@@ -11,28 +11,30 @@ int main()
     ll n;
     cin >> n;
     ll a[n];
+    ll ma = 0;
     for (ll i = 0; i < n; i++)
+    {
         cin >> a[i];
+        ma = max(ma, a[i]);
+    }
     ll ans = 0;
+    vector<vector<ll>> div(ma + 1);
+    for (ll i = 1; i <= ma; i++)
+    {
+        for (ll j = i; j <= ma; j += i)
+        {
+            div[j].push_back(i);
+        }
+    }
     vector<ll> dp(n + 1, 0);
     dp[0] = 1;
     for (ll i = 0; i < n; i++)
     {
-        vector<ll> fact;
-        for (ll j = 1; j * j <= a[i]; j++)
+        for (ll j = div[a[i]].size() - 1; j >= 0; j--)
         {
-            if (a[i] % j == 0)
-            {
-                fact.push_back(j);
-                if (j * j != a[i])
-                    fact.push_back(a[i] / j);
-            }
-        }
-        sort(fact.begin(), fact.end());
-        reverse(fact.begin(), fact.end());
-        for (auto num : fact)
-        {
-            dp[num] = (dp[num] + dp[num - 1]) % M;
+            ll num = div[a[i]][j];
+            if (num <= n)
+                dp[num] = (dp[num] + dp[num - 1]) % M;
         }
     }
     for (ll i = 1; i <= n; i++)
