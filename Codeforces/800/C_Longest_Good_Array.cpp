@@ -6,7 +6,6 @@ using namespace std;
 /*
 l, l+1, l+3, l+6, l+10, l+15
 0,1,3,6,10,15
-0,1,
 */
 
 int main()
